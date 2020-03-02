@@ -7,6 +7,10 @@ const path = require("path");
 // обработка css
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+// csso
+const CssoWebpackPlugin = require("csso-webpack-plugin").default;
+const cssoConfig = require("./cssoConfig.js");
+
 // плагин копирования файалов
 const CopyPlugin = require("copy-webpack-plugin");
 
@@ -111,7 +115,11 @@ module.exports = (env, argv) => {
         }
       ]
     },
-    plugins: [new MiniCssExtractPlugin(), new CopyPlugin(copyFilesList)]
+    plugins: [
+      new MiniCssExtractPlugin(),
+      new CssoWebpackPlugin(cssoConfig),
+      new CopyPlugin(copyFilesList)
+    ]
   };
 
   return config;
