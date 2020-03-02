@@ -14,6 +14,9 @@ const cssoConfig = require("./cssoConfig.js");
 // плагин копирования файалов
 const CopyPlugin = require("copy-webpack-plugin");
 
+// clear build
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+
 // папка билда
 const build = "./build/";
 
@@ -59,15 +62,15 @@ for (let i = 0, max = themesList.length; i < max; i++) {
   }
 
   // добавляем js путь
-  entry[`${item}/index.min`] = path.resolve(
+  entry[`${themes}/${item}/index.min`] = path.resolve(
     __dirname,
-    `src/themes/${item}/js/index.js`
+    `src/${themes}/${item}/js/index.js`
   );
 
   // добавляем scss путь для компиляции в css
-  entry[`${item}/styles`] = path.resolve(
+  entry[`${themes}/${item}/styles`] = path.resolve(
     __dirname,
-    `src/themes/${item}/scss/index.scss`
+    `src/${themes}/${item}/scss/index.scss`
   );
 
   // создаем папку для картинок проекта в build
@@ -90,7 +93,7 @@ module.exports = (env, argv) => {
     context: path.resolve(__dirname),
     entry: entry,
     output: {
-      path: path.join(__dirname, build, "themes")
+      path: path.join(__dirname, build)
     },
     module: {
       rules: [
@@ -116,6 +119,7 @@ module.exports = (env, argv) => {
       ]
     },
     plugins: [
+      new CleanWebpackPlugin(),
       new MiniCssExtractPlugin(),
       new CssoWebpackPlugin(cssoConfig),
       new CopyPlugin(copyFilesList)
