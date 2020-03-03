@@ -61,22 +61,25 @@ for (let i = 0, max = themesList.length; i < max; i++) {
     fs.mkdirSync(dir);
   }
 
-  // добавляем js путь
-  entry[`${themes}/${item}/index.min`] = path.resolve(
-    __dirname,
-    `src/${themes}/${item}/js/index.js`
-  );
+  const jsFile = path.resolve(__dirname, `src/${themes}/${item}/js/index.js`);
+  if (fs.existsSync(jsFile)) {
+    // добавляем js путь
+    entry[`${themes}/${item}/index.min`] = jsFile;
+  }
 
-  // добавляем scss путь для компиляции в css
-  entry[`${themes}/${item}/styles`] = path.resolve(
+  const scssFile = path.resolve(
     __dirname,
     `src/${themes}/${item}/scss/index.scss`
   );
+  if (fs.existsSync(scssFile)) {
+    // добавляем scss путь для компиляции в css
+    entry[`${themes}/${item}/styles`] = scssFile;
+  }
 
+  const imagesFolder = path.join(build, themes, item, "img");
   // создаем папку для картинок проекта в build
-  dir = path.join(build, themes, item, "img");
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
+  if (!fs.existsSync(imagesFolder)) {
+    fs.mkdirSync(imagesFolder);
   }
 
   // добавляем картинки проекта для копирования
