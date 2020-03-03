@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --mode development --watch",
-    "build": "webpack --mode production"
+    "dev": "webpack --config ./webpack/webpack.config.js --mode development --watch",
+    "build": "webpack --config ./webpack/webpack.config.js --mode production"
   },
   "author": "ilya_smurov <ilya@smurov.com> (smurov.com)",
   "license": "ISC",
